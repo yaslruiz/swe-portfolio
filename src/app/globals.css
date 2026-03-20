@@ -104,3 +104,36 @@ body {
   background: var(--color-border-hover);
   border-radius: var(--radius-full);
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  :root {
+    --about-cols: 1fr;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-nav {
+    display: none !important;
+  }
+  .mobile-menu {
+    display: none !important;
+  }
+}
+
+/* Dark mode contrast fixes */
+.dark {
+  --color-bg: #0a0a0a;
+  --color-bg-secondary: #141414;
+  --color-bg-tertiary: #1e1e1e;
+  --color-text-primary: #f0f0ee;
+  --color-text-secondary: #b0b0ae;
+  --color-text-tertiary: #707070;
+  --color-accent: #60a5fa;
+  --color-accent-hover: #93c5fd;
+  --color-border: #2e2e2e;
+  --color-border-hover: #424242;
+}

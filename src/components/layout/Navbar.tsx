@@ -15,6 +15,7 @@ export function Navbar() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => setMounted(true), 0)
@@ -40,7 +41,7 @@ export function Navbar() {
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: scrolled
-          ? 'color-mix(in srgb, var(--color-bg) 80%, transparent)'
+          ? 'color-mix(in srgb, var(--color-bg) 90%, transparent)'
           : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         borderBottom: scrolled
@@ -57,13 +58,20 @@ export function Navbar() {
           color: 'var(--color-text-primary)',
           textDecoration: 'none',
           letterSpacing: '-0.02em',
+          flexShrink: 0,
         }}
       >
         yl.
       </Link>
 
+      {/* Desktop nav */}
       <nav
-        style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-8)' }}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--space-8)',
+        }}
+        className="desktop-nav"
       >
         {navLinks.map((link) => (
           <a
@@ -85,7 +93,6 @@ export function Navbar() {
             {link.label}
           </a>
         ))}
-
         {mounted && (
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -105,6 +112,79 @@ export function Navbar() {
           </button>
         )}
       </nav>
+
+      {/* Mobile right side */}
+      <div
+        style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}
+        className="mobile-nav"
+      >
+        {mounted && (
+          <button
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            style={{
+              background: 'none',
+              border: '0.5px solid var(--color-border)',
+              borderRadius: 'var(--radius-md)',
+              padding: '6px 10px',
+              cursor: 'pointer',
+              fontSize: 'var(--text-sm)',
+              color: 'var(--color-text-secondary)',
+            }}
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? '☀️' : '🌙'}
+          </button>
+        )}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          style={{
+            background: 'none',
+            border: '0.5px solid var(--color-border)',
+            borderRadius: 'var(--radius-md)',
+            padding: '6px 10px',
+            cursor: 'pointer',
+            fontSize: 'var(--text-sm)',
+            color: 'var(--color-text-secondary)',
+          }}
+          aria-label="Toggle menu"
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
+      </div>
+
+      {/* Mobile dropdown menu */}
+      {menuOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '64px',
+            left: 0,
+            right: 0,
+            backgroundColor: 'var(--color-bg)',
+            borderBottom: '0.5px solid var(--color-border)',
+            padding: 'var(--space-6)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--space-6)',
+          }}
+          className="mobile-menu"
+        >
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                fontSize: 'var(--text-base)',
+                color: 'var(--color-text-secondary)',
+                textDecoration: 'none',
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      )}
     </header>
   )
 }

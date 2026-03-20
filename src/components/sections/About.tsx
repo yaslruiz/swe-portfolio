@@ -63,7 +63,7 @@ export function About() {
         transition={{ duration: 0.6, delay: 0.1 }}
         style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: 'var(--about-cols, 1fr 1fr)',
           gap: 'var(--space-16)',
         }}
       >
